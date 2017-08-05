@@ -1,0 +1,18 @@
+[
+  ["CIMED", 6043, [
+      ["Casini", 29],
+      ["Rodrigo", 29],
+      ["Evandro", 27],
+      ["Fábio", 30]
+    ]
+  ],
+  ["HEMOCENTRO", 6025, [
+      ["SOROLOGIA", 209],
+      ["HEMATO", 206]
+    ]
+  ],
+  ["TOMOGRAFIA", 6217, []
+  ],
+  ["RESSONANCIA", 6218, []
+  ]
+]

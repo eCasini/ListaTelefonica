@@ -1,0 +1,17 @@
+#kivy 1.10.0
+
+<ListaT>:
+    orientation: 'vertical'
+    input_wid: txt_inpt
+    TextInput:
+        id: txt_inpt
+        size_hint_y: None
+        height:30
+        multiline: False
+        focus: True
+        on_text_validate: root.busca(txt_inpt.text)
+    Widget:
+
+
+
+
