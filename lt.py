@@ -1,16 +1,15 @@
 # Programa - Lista Telefônica
 # Versão - 1.0
-# usuário digita uma palavra e clica ok ou da enter
-# vai fazer a busca no banco para uma palavra(s) parecida(s)
-# exibe no frame de baixo a lista por ordem de relevancia
+# Usuário digita uma palavra e pressiona Enter
+# vai fazer a busca no banco com a(s) palavra(s) parecida(s)
+# exibe abaixo a lista de resultados por ordem de relevancia
 #
-# Exibira um label com o nome da área e outro com o ramal
+# Exibira uma linha com o nome da área e seu ramal
 # logo abaixo, se existir, exibirá os sublocais e seus ramais internos
 
 import sqlite3
 import kivy
 kivy.require("1.10.0")
-
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -26,18 +25,15 @@ cur = con.cursor()
 class ListaT(BoxLayout):
     input_wid = ObjectProperty()
 
-
     def refocus(self, *args):
         self.input_wid.text = ""
         self.input_wid.focus = True
-
 
     def busca(self, string):
         # Limpa os widgets caso haja um pesquisa anterior já exibida na tela
         for child in [child for child in self.children]:
             if (str(type(child)) != "<class 'kivy.uix.textinput.TextInput'>"):
                 ListaT.remove_widget(self, child)
-
 
         # Faz a busca pela palavra digitada e popula os resultados nos Labels
         string = "%" + string + "%"
@@ -60,9 +56,7 @@ class ListaT(BoxLayout):
                         stringSubArea += "    " + i[2] + "    " + "--------    " + str(i[3]) + "\n"
                     lb = Label(text=stringArea + stringSubArea)
                     self.add_widget(lb)
-
             Clock.schedule_once(self.refocus)
-
         else:
             lb = Label(text="NÃO ENCONTREI NADA!")
             self.add_widget(lb)
