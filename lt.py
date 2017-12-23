@@ -16,6 +16,12 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.properties import ObjectProperty
 from kivy.clock import Clock
+from kivy import Config
+
+# Configura a localização de onde a tela será criada
+Config.set('graphics', 'position', 'custom')
+Config.set('graphics', 'top', '100')
+Config.set('graphics', 'left', '1050')
 
 # Cria ou inicia conexao com o banco
 con = sqlite3.connect('ListaTelDB.sqlite')
@@ -31,9 +37,10 @@ class ListaT(BoxLayout):
 
     def busca(self, string):
         # Limpa os widgets caso haja um pesquisa anterior já exibida na tela
-        for child in [child for child in self.children]:
-            if (str(type(child)) != "<class 'kivy.uix.textinput.TextInput'>"):
-                ListaT.remove_widget(self, child)
+        # for child in [child for child in self.children]:
+        #     if (str(type(child)) != "<class 'kivy.uix.textinput.TextInput'>"):
+        #         ListaT.remove_widget(self, child)
+        self.rv.data = []
 
         # Faz a busca pela palavra digitada e popula os resultados nos Labels
         string = "%" + string + "%"
@@ -47,19 +54,22 @@ class ListaT(BoxLayout):
                 subresult = cur.fetchall()
                 if subresult == []:
                     stringArea = str(local[0]) + "    " + "--------    " + str(local[1]) + "\n"
-                    lb = Label(text=stringArea)
-                    self.add_widget(lb)
+                    # lb = Label(text=stringArea)
+                    # self.add_widget(lb)
+                    self.rv.data.insert(0, {'value': stringArea or 'default value'})
                 else:
                     stringArea = str(local[0]) + "    " + "--------    " + str(local[1]) + "\n"
                     stringSubArea = str()
                     for i in subresult:
                         stringSubArea += "    " + i[2] + "    " + "--------    " + str(i[3]) + "\n"
-                    lb = Label(text=stringArea + stringSubArea)
-                    self.add_widget(lb)
+                    # lb = Label(text=stringArea + stringSubArea)
+                    # self.add_widget(lb)
+                    self.rv.data.insert(0, {'value': stringArea + stringSubArea or 'default value'})
             Clock.schedule_once(self.refocus)
         else:
-            lb = Label(text="NÃO ENCONTREI NADA!")
-            self.add_widget(lb)
+            # lb = Label(text="NÃO ENCONTREI NADA!")
+            # self.add_widget(lb)
+            self.rv.data.insert(0, {'value': "NÃO ENCONTREI NADA!" or 'default value'})
             Clock.schedule_once(self.refocus)
 
 
